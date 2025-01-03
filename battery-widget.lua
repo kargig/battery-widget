@@ -108,7 +108,7 @@ function battery_widget:new(args)
     end
     -- creates an empty container wibox, which can be added to your panel even if its empty
     local widgets = { layout = wibox.layout.fixed.horizontal }
-    local batteries, mains, usb, usp = self:discover()
+    local batteries, mains, usb, ups = self:discover()
     local ac = mains[1] or usb[1] or ups[1]
     for i, adapter in ipairs(batteries) do
         local _args = setmetatable({adapter = adapter, ac = ac}, {__index = args})
@@ -233,18 +233,19 @@ function battery_widget:update()
     ctx.time_left  = nil  -- time until charging/discharging complete
     ctx.time_text  = ""
     ctx.time_est   = ""
+    ctx.statussym = "⌁"
 
     if ctx.rate and ctx.rate ~= 0 then
         if not ctx.state or ctx.state == "discharging" then
             ctx.charge_dir = -1
             ctx.time_left = ctx.charge / ctx.rate
-            ctx.statussym="▼"
+            ctx.statussym = "▼"
         elseif ctx.state == "charging" then
             ctx.charge_dir = 1
             ctx.time_left = (ctx.capacity - ctx.charge) / ctx.rate
-            ctx.statussym="▲"
+            ctx.statussym = "▲"
 		else
-            ctx.statussym="-"
+            ctx.statussym = "-"
         end
     end
 

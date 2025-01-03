@@ -278,7 +278,7 @@ function battery_widget:update()
             self:notify(substitute(self.alert_title, ctx),
                         substitute(self.alert_text, ctx))
         elseif ctx.state == "full" and self.warn_full_battery then
-            self:notify('Battery Full!', 'Remove power chord')
+            self:notify('Battery Full!', 'Remove power cord')
         else
             if self.alert then
                 naughty.destroy(
